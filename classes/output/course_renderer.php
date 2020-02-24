@@ -123,9 +123,7 @@ class course_renderer extends \core_course_renderer  {
 //                    $trimtitlevalue = $PAGE->theme->settings->trimtitle;
 //                    $trimsummaryvalue = $PAGE->theme->settings->trimsummary;
                     $summary = $course->summary;
-//                    $summary = format_text($course->summary, FORMAT_HTML, ['noclean'=>true, 'context' => context_system:instance()]);
-//                    $summary = file_rewrite_pluginfile_urls($course->summary, 'pluginfile.php', $context->id, 'course','section', $section->id);
-//                    $summary = format_text($summary, $course->summaryformat, array('para' => false, 'context' => $context));
+                    $summary = format_text($course->summary, FORMAT_HTML, ['noclean'=>true, 'context' => context_system::instance()]);
 
                     $trimtitle = format_string($course->fullname);
                     $courseurl = new moodle_url('/course/view.php', array(
