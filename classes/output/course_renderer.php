@@ -456,22 +456,23 @@ class course_renderer extends \core_course_renderer {
     protected function coursecat_courses_ml(coursecat_helper $chelper, $courses, &$totalcount = null) {
 
         // Only applicable to Front page.
+        $recount = false;
         $filtertag = $this->page->theme->settings->filtercoursesbytag;
         if ($this->page->bodyid == 'page-site-index' && !empty($filtertag)) {
             // Filter out courses if it doesn't contain the tag we are looking for.
             foreach($courses as $key => $course) {
                 if (!$this->hastag($course->id, $filtertag)) {
                     unset($courses[$key]);
+                    $recount = true;
                 }
             }
-            // Update the total count.
-            $totalcount = count($courses);
         }
 
         // Remove courses that are not in a visible category path.
         foreach($courses as $key => $course) {
             if (!$this->isvisiblecat($course)) {
                 unset($courses[$key]);
+                $recount = true;
             }
         }
 
@@ -483,9 +484,13 @@ class course_renderer extends \core_course_renderer {
                 @$clang = $course->lang; // TODO: Fix ugly hack.
                 if ($course->id != SITEID and !empty($clang) and $clang != $lang) {
                     unset($courses[$key]);
+                    $recount = true;
                 }
             }
-            // Update the total count.
+        }
+
+        // Update the total count if necessary.
+        if ($recount) {
             $totalcount = count($courses);
         }
 
